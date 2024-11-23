@@ -7,12 +7,12 @@ public class BusRequest {
     private String numeroBus;
     private String placa;
     private String caracteristicas;
-    private int marcaId;
+    private Integer marcaId;
     private String estado;
 
     public BusRequest() {}
 
-    public BusRequest(String numeroBus, String placa,String caracteristicas, int marcaId, String estado) {
+    public BusRequest(String numeroBus, String placa,String caracteristicas, Integer marcaId, String estado) {
         this.numeroBus = numeroBus;
         this.placa = placa;
         this.caracteristicas = caracteristicas;
@@ -44,11 +44,11 @@ public class BusRequest {
         this.caracteristicas = caracteristicas;
     }
 
-    public int getMarcaId() {
+    public Integer getMarcaId() {
         return marcaId;
     }
 
-    public void setMarcaId(int marcaId) {
+    public void setMarcaId(Integer marcaId) {
         this.marcaId = marcaId;
     }
 

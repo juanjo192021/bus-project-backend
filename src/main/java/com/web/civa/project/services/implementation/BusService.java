@@ -31,7 +31,7 @@ public class BusService implements IBusService {
 
     @Override
     public Boolean saveBus(Bus bus) {
-        Boolean response;
+        boolean response;
         try {
             busRepository.save(bus);
             response = true;

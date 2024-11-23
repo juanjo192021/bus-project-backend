@@ -4,14 +4,14 @@ import java.util.List;
 
 public class PageDto<T> {
     private List<T> content;
-    private int page;
-    private int size;
-    private long totalElements;
-    private int totalPages;
+    private Integer page;
+    private Integer size;
+    private Long totalElements;
+    private Integer totalPages;
 
     public PageDto() {}
 
-    public PageDto(List<T> content, int page, int size, long totalElements, int totalPages) {
+    public PageDto(List<T> content, Integer page, Integer size, Long totalElements, Integer totalPages) {
         this.content = content;
         this.page = page;
         this.size = size;
@@ -27,35 +27,35 @@ public class PageDto<T> {
         this.content = content;
     }
 
-    public int getPage() {
+    public Integer getPage() {
         return page;
     }
 
-    public void setPage(int page) {
+    public void setPage(Integer page) {
         this.page = page;
     }
 
-    public int getSize() {
+    public Integer getSize() {
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(Integer size) {
         this.size = size;
     }
 
-    public long getTotalElements() {
+    public Long getTotalElements() {
         return totalElements;
     }
 
-    public void setTotalElements(long totalElements) {
+    public void setTotalElements(Long totalElements) {
         this.totalElements = totalElements;
     }
 
-    public int getTotalPages() {
+    public Integer getTotalPages() {
         return totalPages;
     }
 
-    public void setTotalPages(int totalPages) {
+    public void setTotalPages(Integer totalPages) {
         this.totalPages = totalPages;
     }
 }

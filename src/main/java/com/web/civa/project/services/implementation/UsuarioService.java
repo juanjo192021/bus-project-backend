@@ -41,48 +41,38 @@ public class UsuarioService implements IUsuarioService {
 
 
     @Override
-    public AuthResponse login(AuthRequest request) {
-        AuthResponse authResponse = null;
-        Optional<Usuario> usuarioOptional = usuarioRepository.findByNombreUsuario(request.getNombreUsuario());
-        if(usuarioOptional.isPresent()) {
-            Usuario user = usuarioOptional.get();
-
-            String accessToken = jwtUtil.generarToken(user);
-
+    public AuthResponse login(Usuario usuario) {
+        AuthResponse authResponse;
+        try {
+            String accessToken = jwtUtil.generarToken(usuario);
             UsuarioDto usuarioDTO = new UsuarioDto();
+            usuarioDTO.setNombreUsuario(usuario.getNombreUsuario());
+            usuarioDTO.setNombreRol(usuario.getRol().getNombre());
+            authResponse = new AuthResponse(usuarioDTO, accessToken);
 
-            usuarioDTO.setNombreUsuario(user.getNombreUsuario());
-            usuarioDTO.setNombreRol(user.getRol().getNombre());
-
-            AuthResponse response = new AuthResponse(usuarioDTO, accessToken);
-
-            return response;
+        }catch (Exception e) {
+            authResponse = null;
         }
         return authResponse;
     }
 
     @Override
-    public AuthResponse saveUser(RegisterRequest request) {
-        AuthResponse authResponse = null;
-        Optional<Usuario> usuarioOptional = usuarioRepository.findByNombreUsuario(request.getNombreUsuario());
-        if(usuarioOptional.isEmpty()) {
-            Optional<Rol> rol = rolRepository.findById(request.getIdRol());
-            Usuario user = new Usuario();
-            user.setNombreUsuario(request.getNombreUsuario());
-            user.setClave(passwordEncoder.encode(request.getClave()));
-            user.setRol(rol.get());
-
-            usuarioRepository.save(user);
-
-            String accessToken = jwtUtil.generarToken(user);
-
-            UsuarioDto usuarioDTO = new UsuarioDto(request.getNombreUsuario(), rol.get().getNombre());
-
-            AuthResponse response = new AuthResponse(usuarioDTO, accessToken);
-
-            return response;
+    public AuthResponse saveUser(Usuario usuario) {
+        AuthResponse authResponse;
+        try {
+            usuario.setClave(passwordEncoder.encode(usuario.getClave()));
+            usuarioRepository.save(usuario);
+            String accessToken = jwtUtil.generarToken(usuario);
+            UsuarioDto usuarioDTO = new UsuarioDto(usuario.getNombreUsuario(), usuario.getRol().getNombre());
+            authResponse = new AuthResponse(usuarioDTO, accessToken);
+        } catch (Exception e) {
+            authResponse = null;
         }
         return authResponse;
+    }
 
+    @Override
+    public Optional<Usuario> getUsuarioByNombreUsuario(String nombreUsuario) {
+        return usuarioRepository.findByNombreUsuario(nombreUsuario);
     }
 }

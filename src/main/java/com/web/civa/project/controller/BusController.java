@@ -117,7 +117,26 @@ public class BusController {
                         )
                 );
             }
+
+            if (busRequest.getPlaca() == null || busRequest.getPlaca().isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                        new ApiResponse(
+                                "FAIL",
+                                "El campo placa es obligatorio."
+                        )
+                );
+            }
+
             if (busRequest.getCaracteristicas() == null || busRequest.getCaracteristicas().isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                        new ApiResponse(
+                                "FAIL",
+                                "El campo características es obligatorio."
+                        )
+                );
+            }
+
+            if (busRequest.getMarcaId() == null || busRequest.getMarcaId() <=0 ) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                         new ApiResponse(
                                 "FAIL",
@@ -168,7 +187,7 @@ public class BusController {
             Boolean response = busService.saveBus(bus);
 
             if (!response) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(
                         new ApiResponse(
                                 "FAIL",
                                 "Ocurrio un error al guarda el bus."
